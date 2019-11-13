@@ -24,14 +24,10 @@ post_blueprint = Blueprint('post', __name__)
 mongo = PyMongo(app, retryWrites=False, connect=True)
 
 
-@post_blueprint.route("/image", methods=["POST"])
-def imageUpdate():
-    image = mongo.db.image
-    data = request.form
-    data = dict(data)
-    data['_id'] = ObjectId(data['_id'])
-    image_status = image.find_one_and_update({"_id": data['_id'], "uid": data['uid']}, {"$set": data}, return_document=ReturnDocument.AFTER)
-    print(image_status)
-    if image_status:
-        return jsonify({'success': True, 'message': 'Successfully Updated'})
+@post_blueprint.route("/data", methods=["POST"])
+def index():
+    # vanilla = mongo.db.vanilla
+    data = request.json(force=True)
+    print(data)
+    # data = dict(data)
     return jsonify({'success': False, 'message': 'Cannot update Image Data'})

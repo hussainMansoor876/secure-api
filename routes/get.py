@@ -19,9 +19,9 @@ mongo = PyMongo(app, retryWrites=False)
 @get_blueprint.route("/all")
 def all():
     vanilla = mongo.db.vanilla
-    vanilla_data = article.find({})
+    vanilla_data = vanilla.find({})
     data = []
-    for x in article_data:
+    for x in vanilla_data:
         x['_id'] = str(x['_id'])
         data.append(x)
     return jsonify({'data': data})
