@@ -4,23 +4,20 @@ import math
 import os
 from dotenv import load_dotenv
 import json
-from flask_cors import CORS, cross_origin
-import datetime
-from pymongo import ReturnDocument
 
 
 load_dotenv()
 
 app = Flask(__name__)
-app.config['MONGO_DBNAME'] = os.getenv('MONGO_DBNAME')
+app.config['MONGO_DBNAME'] = os.getenv('MONGO_DBNAME') #connect the database
 app.config['MONGO_URI'] = os.getenv('MONGO_URI')
 
 
 post_blueprint = Blueprint('post', __name__)
-mongo = PyMongo(app, retryWrites=False, connect=True)
+mongo = PyMongo(app, retryWrites=False, connect=True) #connect the database from flask app
 
 
-@post_blueprint.route("/data", methods=["POST"])
+@post_blueprint.route("/data", methods=["POST"]) #post request for adding the data
 def index():
     vanilla = mongo.db.vanilla
     data = request.json
