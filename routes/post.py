@@ -1,5 +1,6 @@
 from flask import Blueprint, Flask, jsonify, request, Response
 from flask_pymongo import PyMongo
+import math
 import os
 from dotenv import load_dotenv
 import json
@@ -27,7 +28,17 @@ mongo = PyMongo(app, retryWrites=False, connect=True)
 @post_blueprint.route("/data", methods=["POST"])
 def index():
     # vanilla = mongo.db.vanilla
-    data = request.json(force=True)
-    print(data)
-    # data = dict(data)
+    data = request.json
+    timeRatio = 0
+    if(data['time']['months']):
+        timeRatio = data['time']['years'] + data['time']['months'] / 12
+        print(timeRatio)
+    vanillaCallOption = 0.4 * data['volatility'] * math.sqrt(timeRatio) * data['basePrice'] 
+    vanilla_data = {
+        "volatility": data['volatility'],
+        "timeRatio": timeRatio,
+        "basePrice": data['basePrice'],
+        "vanillaCallOption": vanillaCallOption
+    }
+    print(vanilla_data)
     return jsonify({'success': False, 'message': 'Cannot update Image Data'})
