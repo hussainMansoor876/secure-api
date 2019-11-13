@@ -17,7 +17,7 @@ app.register_blueprint(post.post_blueprint, url_prefix='/post')
 
 @app.route('/')
 def index():
-    return jsonify({ "message" : "Wellcome To RESTFUL APIs"})
+    return jsonify({ "message" : "Wellcome To Secure RESTFUL APIs"})
 
 
 
