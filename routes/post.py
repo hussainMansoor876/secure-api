@@ -27,13 +27,14 @@ mongo = PyMongo(app, retryWrites=False, connect=True)
 
 @post_blueprint.route("/data", methods=["POST"])
 def index():
-    # vanilla = mongo.db.vanilla
+    vanilla = mongo.db.vanilla
     data = request.json
     timeRatio = 0
     if(data['time']['months']):
         timeRatio = data['time']['years'] + data['time']['months'] / 12
         print(timeRatio)
-    vanillaCallOption = 0.4 * data['volatility'] * math.sqrt(timeRatio) * data['basePrice'] 
+    vanillaCallOption = 0.4 * data['volatility'] * \
+        math.sqrt(timeRatio) * data['basePrice']
     vanilla_data = {
         "volatility": data['volatility'],
         "timeRatio": timeRatio,
@@ -41,4 +42,5 @@ def index():
         "vanillaCallOption": vanillaCallOption
     }
     print(vanilla_data)
-    return jsonify({'success': False, 'message': 'Cannot update Image Data'})
+    vanilla.insert_one(vanilla_data)
+    return jsonify({"success": True})
