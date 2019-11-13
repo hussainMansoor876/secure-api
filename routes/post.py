@@ -4,13 +4,8 @@ import math
 import os
 from dotenv import load_dotenv
 import json
-import bcrypt
 from flask_cors import CORS, cross_origin
 import datetime
-from bson.json_util import ObjectId
-import jwt
-import cloudinary as Cloud
-from cloudinary import uploader
 from pymongo import ReturnDocument
 
 
